@@ -1,0 +1,38 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.Question img{
+	height: 100px;
+	width: 100px;
+	margin-left: 7px;
+}
+
+
+
+.QuestionButtons{
+	margin-top: 5px;
+}
+
+.Question{
+	padding-top: 12px;
+	
+}
+
+.Question-Tags{
+	position:relative;
+	bottom:0;
+}
+
+.Question-tags-form{
+	padding-top:5px;
+}
+
+.checkbox{
+	position:relative;
+	bottom:0;
+}
