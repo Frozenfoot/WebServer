@@ -1,0 +1,15 @@
+{% extends 'fish.html' %}
+{% block title %}LoggedIn {% endblock %}		
+{% block avatar %}
+		<div class="col-md-1" id = "imag">
+			<div class="row-md-4">
+				<img src="" alt="" class ="img-circle img-responsive">
+			</div>
+		</div>
+		
+		<div class="col-md-2">
+			<b></b> <br>
+			<a href="{% url 'signup' %}">Sign up</a>
+			<a href="{% url 'login' %}">Log In</a>
+		</div>
+{% endblock %}

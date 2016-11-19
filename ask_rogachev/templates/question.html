@@ -1,0 +1,68 @@
+{% extends 'withPgination.html' %}
+
+{% block title %}Question{% endblock %}
+
+{% block mainPart %}	
+	<div class="col-md-9">
+		<div class="row">
+			<div class="col-md-2">
+				<div class="Question">
+					<img src="../static/pictures/{{question.author.avatar}}
+					" alt="avatar" class ="img-circle img-responsive">
+					<div class="QuestionButtons">
+						<button type="button" class="btn btn-default"> 
+							<span class="glyphicon glyphicon-arrow-down"></span>
+						</button>
+						<button type="button" class="btn btn-default disabled"> {{question.like.likes}} </button>
+						<button type="button" class="btn btn-default"> 
+							<span class="glyphicon glyphicon-arrow-up"> </span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10">
+				<h2> {{question.id}}</h2>
+				<p class="text-justify">{{question.text}}
+				<div class="Question-Tags">
+				Tags:
+					{% for tagObject in question.tag_set.all %}
+						<a href=> {{tagObject.text}} </a>
+					{% endfor %}
+				</div>
+				</p>
+			</div>
+		</div>
+		<HR SIZE=5 WIDTH=1000 ALIGN=LEFT>
+		{% for answer in objects %}
+		<div class="row">
+			<div class="col-md-2">
+				<div class="Question">
+					<img src="../static/pictures/{{answer.question.author.avatar}}" alt="avatar" class ="img-circle img-responsive">
+					<div class="QuestionButtons">
+						<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-down"></span></button>
+						<button type="button" class="btn btn-default disabled"> {{answer.like.likes}} </button>
+						<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-up"> </span></button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10">
+				<a href="{% url 'question' answer.id %}"><h4>{{answer.id}}</h4></a>
+				<p class="text-justify">{{answer.text}}
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value=""> Correct!
+					</label>
+				</div>
+				</p>
+			</div>
+		</div>
+		{% endfor %}
+		
+		<HR SIZE=5 WIDTH=1000 ALIGN=LEFT>
+		
+		<form class="form-horizontal myAnswer" role="form">
+          <textarea class="form-control input-lg" maxlength="256" placeholder="Enter yor answer here." rows="5"></textarea>
+          <button type="submit" class="btn btn-success">Answer</button>
+        </form>
+	</div>
+{% endblock %}

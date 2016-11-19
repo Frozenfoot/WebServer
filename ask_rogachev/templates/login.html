@@ -1,0 +1,57 @@
+{% extends 'notLoggedIn.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block mainPart %}
+<div class="col-md-9">
+	<div class="row">
+			<div class="col-md-offset-2 col-md-4">
+				<h2><b>Log in</b></h2>
+			</div>
+		</div>
+		
+	<form class="form-horizontal">
+		<div class= "row">
+			<div class="col-md-offset-2 col-md-5">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-offset-2 col-md-5">
+				<div class="form-group">
+					<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+					<button type="submit" class="btn btn-default">Sign in</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<a href="signin.html"> </a>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<a href="{% url 'signup' %}"> Create new account</a>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

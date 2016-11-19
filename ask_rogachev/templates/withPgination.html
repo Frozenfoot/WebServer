@@ -1,0 +1,22 @@
+{% extends 'loggedIn.html' %}
+{% block lowerPart %}
+
+<div class="row-md-1">
+	<div class="col-md-offset-5 col-md-7">
+		<br><br>
+		<div class="btn-group btn-group-lg">
+			{% if objects.has_previous %}
+			<a href="?page={{ objects.previous_page_number }}"><button type="button" class="btn btn-default">
+				<i class="glyphicon glyphicon-backward"></i>
+			</button></a>
+			{% endif %}
+			<a><button type="button" class="btn btn-default">{{objects.number}}</button></a>
+			{% if objects.has_next %}
+			<a href="?page={{ objects.next_page_number }}"><button type="button" class="btn btn-default">
+				<i class="glyphicon glyphicon-forward"></i>
+			</button></a>
+			{% endif %}
+		</div>
+	</div>	
+</div>
+{% endblock %}

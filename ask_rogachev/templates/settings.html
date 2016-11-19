@@ -1,0 +1,56 @@
+{% extends 'loggedIn.html' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block mainPart %}
+<div class="col-md-9">
+  <div class="row">
+    <div class="col-md-4">
+      <h2><b>Settings</b></h2>
+    </div>
+  </div>
+    
+  <div class="row">
+    <div class="col-md-8">
+    <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-3 control-label designation">Login</label>
+            <div class="col-md-7">
+              <p class="form-control-static">NickName</p>
+            </div>
+          </div>
+          <div class="form-group has-error">
+            <label for="inputPassword3" class="col-sm-3 control-label designation">Email</label>
+            <div class="col-md-7">
+              <input type="text" maxlength="64" class="form-control input-lg" autocomplete="nickname@mail.ru" id="inputError1">
+            </div>
+            <label class="control-label col-sm-2" for="inputError1">Input Error</label><br>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-3 control-label designation">New NickName</label>
+            <div class="col-md-7">
+              <input type="text" maxlength="64" class="form-control input-lg" autocomplete="NickName">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-3 control-label designation">Upload avatar</label>
+            <div class="col-md-6 input-group adress">
+              
+              <input type="text" class="form-control input-lg setting" placeholder="Open...">
+              <span class="input-group-btn">
+                <button class="btn btn-lg setting" type="button" id="choose">View</button>
+              </span>
+
+            </div>
+            <img class="setting col-sm-offset-3" src="../static/pictures/140.jpg" alt="Avatar" class="img-rounded">
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-3 col-md-9 adress">
+              <button type="submit" class="btn btn-lg">Save</button>
+            </div>
+          </div>
+        </form>
+    </div>
+    </div>
+  </div>
+{% endblock %}

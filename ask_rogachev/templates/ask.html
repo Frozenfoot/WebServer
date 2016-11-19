@@ -1,0 +1,53 @@
+{% extends 'loggedIn.html' %}
+
+{% block title %}Ask{% endblock %}
+
+{% block mainPart %}
+<div class = "col-md-9">
+	<div class="row">
+				<h2><b>New Question</b></h2>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-2">
+					<b><h4>Title</b></h4>
+				</div>
+				<div class="col-md-8">
+					<input required type="text" maxlength="64" class="form-control input-lg" placeholder="Enter Title">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-2">
+					<b><h4>Question</b></h4>
+				</div>
+				
+				<div class="col-md-8">
+					<textarea required class="form-control input-lg" maxlength = "256" rows="10"></textarea>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-2">
+					<b><h4>Tags</b></h4>
+				</div>
+				
+				<div class="col-md-8">
+					<div class="Question-tags-form">
+						<input required type="text" class="form-control input-lg" maxlength = "64" placeholder="Input tags here">
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-2">
+				</div>
+				
+				<div class="col-md-8">
+					<br>
+					<button type="button" class="btn btn-success"> <b>Ask!</b> </button>
+				</div>
+			</div>
+</div>
+{% endblock %}
+

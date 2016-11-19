@@ -1,0 +1,49 @@
+{% extends 'withPgination.html' %}
+
+{% block title %}ask_rogachev.io{% endblock %}
+
+{% block mainPart %}
+<div class="col-md-9">
+	{% block header %}
+	<div class="row-md-2">
+		<div class="col-md-4">
+			<h2><b>New Questions</b></h2>
+		</div>
+		
+		<div class="col-md-8">
+			<a href="{% url 'hot' %}"> <h2>Hot Questions</h2>
+		</div>
+	</div>
+	{% endblock %}
+	{% if objects %}
+		{% for question in objects %}
+			<div class="row">
+				<div class="col-md-2">
+					<div class="Question">
+						<img src="../static/pictures/{{question.author.avatar}}" alt="avatar" class ="img-circle img-responsive">
+						<div class="QuestionButtons">
+							<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-down"></span></button>
+							<button type="button" class="btn btn-default disabled"> {{question.like.likes}} </button>
+							<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-up"> </span></button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-10">
+					<a href="{% url 'question' question.id %}"><h4>{{question.id}}</h4></a>
+					<p class="text-justify">{{question.text}}
+					<div class="Question-Tags">
+						<a class="number" href="{% url 'question' question.id %}"> Answers
+							({{question.answer_set.all|length}})</a> 
+						Tags:
+							{% for tagObject in question.tag_set.all %}
+								<a href="{% url 'tag' tagObject.text %}"> {{tagObject.text}} </a>
+							{% endfor %}
+					</div>
+				</p>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+		</div>
+</div>
+{% endblock %}
