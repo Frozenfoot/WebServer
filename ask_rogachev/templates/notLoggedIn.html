@@ -1,6 +1,19 @@
 {% extends 'fish.html' %}
 {% block title %}LoggedIn {% endblock %}		
 {% block avatar %}
+{% if user.is_authenticated %}
+		<div class="col-md-1" id = "imag">
+			<div class="row-md-4">
+				<img src="../static/pictures/140.jpg" alt="avatar" class ="img-circle img-responsive">
+			</div>
+		</div>
+		
+		<div class="col-md-2">
+			<b>{{ user }}</b> <br>
+			<a href="{% url 'settings'%}">Settings</a>
+			<a href="{% url 'login' %}">Log Out</a>
+		</div>
+{% else %}
 		<div class="col-md-1" id = "imag">
 			<div class="row-md-4">
 				<img src="" alt="" class ="img-circle img-responsive">
@@ -8,8 +21,9 @@
 		</div>
 		
 		<div class="col-md-2">
-			<b></b> <br>
+			<b></b>{{ user }}<br>
 			<a href="{% url 'signup' %}">Sign up</a>
 			<a href="{% url 'login' %}">Log In</a>
 		</div>
+{% endif %}
 {% endblock %}

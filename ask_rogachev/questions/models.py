@@ -9,16 +9,10 @@ class Profile(models.Model):
 		on_delete = models.CASCADE,
 		null = True
 	)
+	publications = models.IntegerField(default = 0)
 
 	def __str__(self):
 		return self.avatar
-
-
-class Like(models.Model):
-	likes = models.IntegerField(default = 0)
-
-	def __str__(self):
-		return str(self.likes)
 
 
 class NewQuestionsManager(models.Manager):
@@ -28,17 +22,16 @@ class NewQuestionsManager(models.Manager):
 
 class TopQuestionsManager(models.Manager):
 	def get_queryset(self):
-		return super(TopQuestionsManager, self).get_queryset().order_by('-like__likes')[0:6]
+		return super(TopQuestionsManager, self).get_queryset().order_by('-like')[0:6]
 
 
 class Question(models.Model):
-	text = models.CharField(max_length = 200)
+	text = models.TextField()
+	title = models.CharField(max_length = 50)
 	author = models.ForeignKey(Profile, on_delete = models.CASCADE)
-	creationDate = models.DateTimeField()
-	like = models.ForeignKey(
-		Like,
-		on_delete = models.CASCADE,
-	)
+	creationDate = models.DateTimeField(auto_now_add = True)
+	like = models.PositiveIntegerField(default = 0);
+
 	objects = models.Manager()
 	byLikes = TopQuestionsManager()
 	byDate = NewQuestionsManager()
@@ -59,10 +52,9 @@ class Tag(models.Model):
 class Answer(models.Model):
 	question = models.ForeignKey(Question, on_delete = models.CASCADE)
 	text = models.CharField(max_length = 200)
-	like = models.OneToOneField(
-		Like,
-		on_delete = models.CASCADE,
-	)
+	like = models.PositiveIntegerField(default = 0)
+	author = models.ForeignKey(Profile)
+	creationDate = models.DateTimeField(auto_now_add = True)
 
 	def __str__(self):
 		return self.text

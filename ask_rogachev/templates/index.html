@@ -23,13 +23,13 @@
 						<img src="../static/pictures/{{question.author.avatar}}" alt="avatar" class ="img-circle img-responsive">
 						<div class="QuestionButtons">
 							<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-down"></span></button>
-							<button type="button" class="btn btn-default disabled"> {{question.like.likes}} </button>
+							<button type="button" class="btn btn-default disabled"> {{question.like}} </button>
 							<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-up"> </span></button>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-10">
-					<a href="{% url 'question' question.id %}"><h4>{{question.id}}</h4></a>
+					<a href="{% url 'question' question.id %}"><h4>{{question.title}}</h4></a>
 					<p class="text-justify">{{question.text}}
 					<div class="Question-Tags">
 						<a class="number" href="{% url 'question' question.id %}"> Answers

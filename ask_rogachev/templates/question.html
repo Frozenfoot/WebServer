@@ -13,7 +13,7 @@
 						<button type="button" class="btn btn-default"> 
 							<span class="glyphicon glyphicon-arrow-down"></span>
 						</button>
-						<button type="button" class="btn btn-default disabled"> {{question.like.likes}} </button>
+						<button type="button" class="btn btn-default disabled"> {{question.like}} </button>
 						<button type="button" class="btn btn-default"> 
 							<span class="glyphicon glyphicon-arrow-up"> </span>
 						</button>
@@ -21,7 +21,7 @@
 				</div>
 			</div>
 			<div class="col-md-10">
-				<h2> {{question.id}}</h2>
+				<h2> {{question.title}}</h2>
 				<p class="text-justify">{{question.text}}
 				<div class="Question-Tags">
 				Tags:
@@ -40,7 +40,7 @@
 					<img src="../static/pictures/{{answer.question.author.avatar}}" alt="avatar" class ="img-circle img-responsive">
 					<div class="QuestionButtons">
 						<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-down"></span></button>
-						<button type="button" class="btn btn-default disabled"> {{answer.like.likes}} </button>
+						<button type="button" class="btn btn-default disabled"> {{answer.like}} </button>
 						<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-up"> </span></button>
 					</div>
 				</div>
