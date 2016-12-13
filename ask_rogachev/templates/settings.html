@@ -1,56 +1,85 @@
-{% extends 'loggedIn.html' %}
+{% extends 'head.html' %}
 
 {% block title %}Settings{% endblock %}
 
 {% block mainPart %}
 <div class="col-md-9">
-  <div class="row">
-    <div class="col-md-4">
-      <h2><b>Settings</b></h2>
-    </div>
+  <div class = "login-form">
+  <div class = "caption">
+    Settings
   </div>
-    
-  <div class="row">
-    <div class="col-md-8">
-    <form class="form-horizontal" role="form">
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-3 control-label designation">Login</label>
-            <div class="col-md-7">
-              <p class="form-control-static">NickName</p>
-            </div>
-          </div>
-          <div class="form-group has-error">
-            <label for="inputPassword3" class="col-sm-3 control-label designation">Email</label>
-            <div class="col-md-7">
-              <input type="text" maxlength="64" class="form-control input-lg" autocomplete="nickname@mail.ru" id="inputError1">
-            </div>
-            <label class="control-label col-sm-2" for="inputError1">Input Error</label><br>
-          </div>
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-3 control-label designation">New NickName</label>
-            <div class="col-md-7">
-              <input type="text" maxlength="64" class="form-control input-lg" autocomplete="NickName">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-3 control-label designation">Upload avatar</label>
-            <div class="col-md-6 input-group adress">
-              
-              <input type="text" class="form-control input-lg setting" placeholder="Open...">
-              <span class="input-group-btn">
-                <button class="btn btn-lg setting" type="button" id="choose">View</button>
-              </span>
 
-            </div>
-            <img class="setting col-sm-offset-3" src="../static/pictures/140.jpg" alt="Avatar" class="img-rounded">
-          </div>
-          <div class="form-group">
-            <div class="col-md-offset-3 col-md-9 adress">
-              <button type="submit" class="btn btn-lg">Save</button>
-            </div>
-          </div>
-        </form>
-    </div>
-    </div>
+  <br>
+
+  <div class = "form">
+    <form enctype = "multipart/form-data" class = "form-horizontal" method = "POST">
+      
+      {% csrf_token %}
+
+      <div class = "form-group">
+        <div class = "col-md-2">
+          <label class = "control-label"> Login </label>
+        </div>
+        
+        <div class = "col-md-7">
+          {{ form.username }}
+        </div>
+
+        <div class = "col-md-3">
+          {{ form.username.errors }}
+        </div>
+
+      </div>
+
+      <div class = "form-group">
+        <div class = "col-md-2">
+          <label class = "control-label"> E-Mail </label>
+        </div>
+        
+        <div class = "col-md-7">
+          {{ form.email }}
+        </div>
+
+        <div class = "col-md-3">
+          {{ form.email.errors }}
+        </div>
+
+      </div>
+
+      <div class = "form-group">
+        <div class = "col-md-2">
+          <label class = "control-label"> Avatar </label>
+        </div>
+
+        <div class = "col-md-7">
+          <img src = "{{ user.profile.avatar.url }}" class = "img-rounded img-thumbnail">
+        </div>
+
+        <div class = "col-md-3">
+        </div>
+
+      </div>
+
+      <div class = "form-group">
+        <div class = "col-md-7 col-md-offset-2">
+          {{ form.avatar }}
+        </div>
+
+        <div class = "col-md-3">
+          {{ form.avatar.errors }}
+        </div>
+
+      </div>
+
+      <div class = "form-group">
+        <div class = "col-md-offset-2 col-md-10">
+          <button type = "submit" class = "btn btn-lg btn-default">
+            <div class = "button-text"> Save </div>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>  
+</div>
   </div>
 {% endblock %}

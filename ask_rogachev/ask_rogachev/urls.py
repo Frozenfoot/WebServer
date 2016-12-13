@@ -25,7 +25,9 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name = 'signup'),
     url(r'^ask/$', views.ask, name = 'ask'),
     url(r'^question/(?P<questionId>[0-9]+)/$', views.question, name = 'question'),
+    url(r'^question/(?P<questionId>[0-9]+)/?page=(?P<pageNumber>[0-9]+)/$', views.question, name = 'question'),
     url(r'^tag/(?P<tagName>[-\w]+)/$', views.tag, name = 'tag'),
     url(r'^admin/', admin.site.urls),
     url(r'^settings/', views.settings, name = 'settings'),
+    url(r'^logout/', views.logout, name = 'logout'),
 ]

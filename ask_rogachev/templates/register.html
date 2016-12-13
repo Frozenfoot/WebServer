@@ -1,69 +1,113 @@
-{% extends 'notLoggedIn.html' %}
+{% extends 'head.html' %}
 
 {% block title %}Login{% endblock %}
 
 {% block mainPart %}
 <div class="col-md-9">
-        <div class="capThree">
-          <h3><b>Registration</h3></b>
-        </div>
-    
-        <form class="form-horizontal" role="form">
-    
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label designation">Login</label>
-      
-            <div class="col-sm-5">
-              <input type="text" maxlength="48" class="form-control input-lg" placeholder="Enter your login">
-            </div>
-      
-          </div>
-      
-          <div class="form-group has-error">
-            <label for="inputPassword3" class="col-sm-2 control-label designation">Email</label>
-            <div class="col-sm-5">
-              <input type="text" maxlength="48" class="form-control input-lg" placeholder="Enter your email" id="inputError1">
-            </div>
-            <label class="control-label col-sm-2" for="inputError1">Input Error</label><br>
-          </div>
-      
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label designation">Nick Name</label>
-            <div class="col-sm-5">
-              <input type="text" maxlength="48" class="form-control input-lg" placeholder="Enter your nickname">
-            </div>
-          </div>
-      
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label designation">Password</label>
-            <div class="col-sm-5">
-              <input type="password" maxlength="48" class="form-control input-lg" placeholder="Enter your password">
-            </div>
-          </div>
-      
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label designation">Repeat password</label>
-            <div class="col-sm-5">
-              <input type="password" maxlength="48" class="form-control input-lg" placeholder="Repeat your password">
-            </div>
-          </div>
-      
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label designation">Upload avatar</label>
-            <div class="col-sm-5 input-group adress">
-              <input type="text" class="form-control input-lg" placeholder="Enter adress of avatar">
-              <span class="input-group-btn">
-                <button class="btn btn-lg" type="button" id="choose">Choose</button>
-              </span>
-            </div>
-          </div>
-      
-          <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-7 adress">
-              <button type="submit" class="btn btn-lg">Register!</button>
-            </div>
-          </div>
-      
-        </form>
+  <div class = "login-form">
+  <div class = "caption">
+    Registration
   </div>
+
+  <br>
+
+  <div class = "form">
+    <form enctype = "multipart/form-data" class = "form-horizontal" method = "POST">
+
+      {% csrf_token %}
+      
+      <div class = "form-group">
+        <div class = "col-md-12">
+          <span class = "danger">
+            {{ form.non_field_errors }}
+          </span>
+
+        </div>
+      </div>
+
+      <div class = "form-group">
+        <div class = "col-md-2">
+          <label class = "control-label"> Login </label>
+        </div>
+        
+        <div class = "col-md-7">
+          {{ form.username }}
+        </div>
+
+        <div class = "col-md-3">
+          {{ form.username.errors }}
+        </div>
+
+      </div>
+
+      <div class = "form-group">
+        <div class = "col-md-2">
+          <label class = "control-label"> E-Mail </label>
+        </div>
+        
+        <div class = "col-md-7">
+          {{ form.email }}
+        </div>
+
+        <div class = "col-md-3">
+          {{ form.email.errors }}
+        </div>
+
+      </div>
+      <div class = "form-group">
+        <div class = "col-md-2">
+          <label class = "control-label"> Password </label>
+        </div>
+        
+        <div class = "col-md-7">
+          {{ form.password }}
+        </div>
+
+        <div class = "col-md-3">
+          {{ form.password.errors }}
+        </div>
+
+      </div>
+
+      <div class = "form-group">
+        <div class = "col-md-2">
+          <label class = "control-label"> Repeat password </label>
+        </div>
+        
+        <div class = "col-md-7">
+          {{ form.repeat_password }}
+        </div>
+
+        <div class = "col-md-3">
+          {{ form.repeat_password.errors }}
+        </div>
+
+      </div>
+
+      <div class = "form-group">
+        <div class = "col-md-2">
+          <label class = "control-label"> Avatar </label>
+        </div>
+        
+        <div class = "col-md-7">
+          {{ form.avatar }}
+        </div>
+
+        <div class = "col-md-3">
+          {{ form.avatar.errors }}
+        </div>
+
+      </div>
+
+      <div class = "form-group">
+        <div class = "col-md-offset-2 col-md-10">
+          <button type = "submit" class = "btn btn-lg btn-default">
+            <div class = "button-text"> Register! </div>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>  
+</div>        
+</div>
 {% endblock %}

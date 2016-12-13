@@ -3,7 +3,12 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-	avatar = models.CharField(max_length = 20, null = True)
+	avatar = models.ImageField(
+		upload_to = 'avatars/%Y/%m/%d/%H/',
+		max_length = 100, 
+		default = '140.jpg'
+		)
+
 	user = models.OneToOneField(
 		User,
 		on_delete = models.CASCADE,
@@ -12,7 +17,7 @@ class Profile(models.Model):
 	publications = models.IntegerField(default = 0)
 
 	def __str__(self):
-		return self.avatar
+		return self.user.username
 
 
 class NewQuestionsManager(models.Manager):
@@ -37,7 +42,7 @@ class Question(models.Model):
 	byDate = NewQuestionsManager()
 
 	def __str__(self):
-		return self.text
+		return self.title
 
 
 class Tag(models.Model):
@@ -57,4 +62,4 @@ class Answer(models.Model):
 	creationDate = models.DateTimeField(auto_now_add = True)
 
 	def __str__(self):
-		return self.text
+		return self.title
