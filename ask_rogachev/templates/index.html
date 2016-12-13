@@ -11,7 +11,7 @@
 		</div>
 		
 		<div class="col-md-8">
-			<a href="{% url 'hot' %}"> <h2>Hot Questions</h2>
+			<a href="{% url 'hot' %}"> <h2>Hot Questions</h2> </a>
 		</div>
 	</div>
 	{% endblock %}
@@ -22,10 +22,17 @@
 					<div class="Question">
 						<img src="{{question.author.avatar.url}}" alt="avatar" class ="img-circle img-responsive">
 						<div class="QuestionButtons">
-							<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-down"></span></button>
-							<button type="button" class="btn btn-default disabled"> {{question.like}} </button>
-							<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-up"> </span></button>
+							<button id="like" data-id = "{{ question.id }}" add-id = "1" type="button" class="btn btn-default likes-button"> <span class="glyphicon glyphicon-arrow-down"> </span></button>
+							<button type="button" class="btn btn-default disabled">{{question.like.likes}}</button>
+							<button id="dislike" data-id = "{{ question.id }}" add-id = "0" type="button" class="btn btn-default likes-button"> <span class="glyphicon glyphicon-arrow-up"> </span></button>
 						</div>
+						<script type="text/javascript">
+							$('.likes-button').on('click', function(){
+
+								console.log('Clicked');
+								return false;
+							})
+						</script>
 					</div>
 				</div>
 				<div class="col-md-10">
@@ -46,4 +53,5 @@
 	{% endif %}
 		</div>
 </div>
+
 {% endblock %}

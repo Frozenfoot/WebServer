@@ -19,7 +19,28 @@ def logout(request):
         return redirect('new')
 
 
-def newQuestions(request):   
+def newQuestions(request):
+
+    '''questionID = None
+    if request.method == 'GET':
+        questionID = request.GET.get('question_id')
+        print (questionID)
+        likeOrDislike = request.GET.get('increase_or_not')
+
+        question = models.Question.objects.get(pk = questionID)
+
+        if question.like.user.filter(request.user).exists(): 
+
+            if int(likeOrDislike) == 1:
+                question.like.likes += 1
+
+            elif int(likeOrDislike == 0):
+                question.like.likes -= 1
+
+            question.save()
+        result = question.like.likes
+        return HttpResponse(result)'''
+
 
     return render(request, 'index.html', {
         'objects' : listing(request, models.Question.byDate.all())
@@ -113,6 +134,8 @@ def ask(request):
         form = forms.AskForm(request.POST)
         if form.is_valid():
             question = form.save(user.id)
+            like = models.Like(question = question, likes = 0)
+            like.save()
             return redirect('question', question.id)
     else:
         form = forms.AskForm()

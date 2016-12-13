@@ -46,7 +46,6 @@ class Command(BaseCommand):
 				self.stdout.write('Error in profile ' + str(i))
 
 
-
 	def fillQuestions(self):
 		n = 1000
 
@@ -65,7 +64,6 @@ class Command(BaseCommand):
 			q = Question(
 				title = title,
 				text = text,
-				like = likes,
 				creationDate = creationDate,
 				author_id = authorID
 				)
@@ -78,6 +76,22 @@ class Command(BaseCommand):
 				q.save()
 
 			self.stdout.write('Question ' + str(i) + 'saved')
+
+
+	def fillLikes(self):
+		n = 1000
+		for i in range(1, n + 1):
+			questions = Question.objects.all().values_list('id', flat = True)
+			likes = random.randint(1, 20)
+			questionID = questions[i - 1]
+			l = Like(likes = likes, question_id = questionID)
+			with transaction.atomic():
+				try:
+					l.save()
+					self.stdout.write('Like ' + str(i) + 'saved')
+				except:
+					self.stdout.write('Like ' + str(i) + 'failed')
+
 
 
 	def fillAnswers(self):
@@ -110,7 +124,8 @@ class Command(BaseCommand):
 
 
 	def handle(self, *args, **options):
-		self.fillTags()
+		#self.fillTags()
 		#self.fillProfiles()
-		self.fillQuestions()
-		self.fillAnswers()
+		#self.fillQuestions()
+		self.fillLikes()
+		#self.fillAnswers()

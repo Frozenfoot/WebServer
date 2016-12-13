@@ -50,7 +50,8 @@ class AskForm(forms.Form):
 
 	def save(self, user_id):
 		data = self.cleaned_data
-		question = Question(title = data['title'], text = data['text'], author_id = user_id)
+		profileID = User.objects.get(id = user_id).profile.id
+		question = Question(title = data['title'], text = data['text'], author_id = profileID)
 		question.save()
 		tags = data['tags']
 		for t in tags:
@@ -70,7 +71,7 @@ class SettingsForm(forms.Form):
 	email = forms.EmailField(widget = forms.EmailInput(attrs = {
 		'class': 'form-control input-lg',
 		}))
-	
+
 	avatar = forms.ImageField(required = False, widget = forms.FileInput(attrs = {
 		'class': 'form-control input-lg',
 		}))
