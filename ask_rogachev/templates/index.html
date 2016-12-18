@@ -1,5 +1,4 @@
 {% extends 'withPgination.html' %}
-
 {% block title %}ask_rogachev.io{% endblock %}
 
 {% block mainPart %}
@@ -16,23 +15,26 @@
 	</div>
 	{% endblock %}
 	{% if objects %}
+		{% csrf_token %}
 		{% for question in objects %}
 			<div class="row">
 				<div class="col-md-2">
 					<div class="Question">
 						<img src="{{question.author.avatar.url}}" alt="avatar" class ="img-circle img-responsive">
 						<div class="QuestionButtons">
-							<button id="like" data-id = "{{ question.id }}" add-id = "1" type="button" class="btn btn-default likes-button"> <span class="glyphicon glyphicon-arrow-down"> </span></button>
-							<button type="button" class="btn btn-default disabled">{{question.like.likes}}</button>
-							<button id="dislike" data-id = "{{ question.id }}" add-id = "0" type="button" class="btn btn-default likes-button"> <span class="glyphicon glyphicon-arrow-up"> </span></button>
-						</div>
-						<script type="text/javascript">
-							$('.likes-button').on('click', function(){
+							{% if user.is_authenticated %}
+							
+							User.profile:{{ user.profile }}
+							<br>
+							{{ question.questionlike_set.profile }}
+							<button type = "button" class = "btn btn-default js-like-question" data-type = "0", data-id = "{{ question.id }}"> <span class = "glyphicon glyphicon-arrow-down"> </span> </button>
 
-								console.log('Clicked');
-								return false;
-							})
-						</script>
+							<button type = "button" class = "btn btn-default disabled likes"> {{ question.likes }} </button>
+							
+							<button type = "button" class = "btn btn-default js-like-question" data-type = "1", data-id = "{{ question.id }}" > <span class = "glyphicon glyphicon-arrow-up"> </span> </button>
+							{% endif %}
+						</div>
+						<!--<script type="text/javascript" src = "/static/js/like.js"></script> -->
 					</div>
 				</div>
 				<div class="col-md-10">

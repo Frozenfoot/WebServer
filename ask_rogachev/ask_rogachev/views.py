@@ -1,9 +1,10 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect, render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import login as authLogin
 from django.contrib.auth import logout as authLogout
 from django.contrib.auth import authenticate
+from django.db.models import Count 
 from questions import models
 from questions import forms
 
@@ -21,27 +22,6 @@ def logout(request):
 
 def newQuestions(request):
 
-    '''questionID = None
-    if request.method == 'GET':
-        questionID = request.GET.get('question_id')
-        print (questionID)
-        likeOrDislike = request.GET.get('increase_or_not')
-
-        question = models.Question.objects.get(pk = questionID)
-
-        if question.like.user.filter(request.user).exists(): 
-
-            if int(likeOrDislike) == 1:
-                question.like.likes += 1
-
-            elif int(likeOrDislike == 0):
-                question.like.likes -= 1
-
-            question.save()
-        result = question.like.likes
-        return HttpResponse(result)'''
-
-
     return render(request, 'index.html', {
         'objects' : listing(request, models.Question.byDate.all())
         })
@@ -50,7 +30,7 @@ def newQuestions(request):
 def hot(request):
 
     return render(request, 'hot.html', {
-        'objects': listing(request, models.Question.byLikes.all()),
+        'objects': listing(request, models.Question.objects.hot()),
     })
 
 
@@ -134,8 +114,6 @@ def ask(request):
         form = forms.AskForm(request.POST)
         if form.is_valid():
             question = form.save(user.id)
-            like = models.Like(question = question, likes = 0)
-            like.save()
             return redirect('question', question.id)
     else:
         form = forms.AskForm()
@@ -168,7 +146,7 @@ def question(request, questionId):
 
     return render(request, 'question.html', {
             'form': form,
-            'objects' : listing(request, question.answer_set.all().order_by('-like')),
+            'objects' : listing(request, question.answer_set.all().annotate(likes = Count('answerlike')).order_by('-likes')),
             'question': question,
             'id': questionId,
     }) 
@@ -199,3 +177,66 @@ def listing(request, respondList, elementsOnPage = 3):
         result = paginator.page(paginator.num_pages)
 
     return result
+
+
+def like_question(request):
+
+    user = request.user
+
+    print ('Trying to like question')
+    if not user.is_authenticated():
+        return JsonResponse({'status' : 'error'})
+
+    if request.method == "POST":
+        questionId = request.POST.get('id', 0)
+        print(questionId)
+        likeOrDislike = request.POST.get('type', 1)
+        print(likeOrDislike)
+
+        try:
+            question = models.Question.objects.get(id = questionId)
+
+        except:
+            print ('Some error occured')
+            return JsonResponse({'status': 'error'})
+
+        try:
+            like = models.QuestionLike(profile = user.profile, question = question, like = likeOrDislike)
+            like.save()
+            #like = models.QuestionLike.objects.get(profile = user.profile, question = question)
+            #like.like = likeOrDislike
+            #like.save()
+
+        except:
+            return JsonResponse({'status': 'Error: you have already liked this question'})            
+
+        return JsonResponse({'status': 'ok'})
+
+
+def like_answer(request):
+
+    user = request.user
+ 
+    if not user.is_authenticated():
+        return JsonResponse({'status': 'error'})
+    
+    if request.method == "POST":
+        answerId = request.POST.get('id', 0)
+        likeOrDislike = request.POST.get('type', 1)
+ 
+        try:
+            answer = Answer.objects.get(pk = answerId)
+        except:
+            return JsonResponse({'status': 'error'})
+ 
+        try:
+            like = AnswerLike(profile = user.profile, answer = answer, like = likeOrDislike)
+            like.save()
+            #like = AnswerLike.objects.get(profile = user.profile, answer = answer)
+            #like.like = likeOrDislike
+            #like.save()
+
+        except:
+            JsonResponse({'status': 'Error:you have already liked this answer'})
+ 
+    return JsonResponse({'status': 'ok'}) 

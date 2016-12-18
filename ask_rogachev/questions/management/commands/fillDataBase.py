@@ -47,7 +47,7 @@ class Command(BaseCommand):
 
 
 	def fillQuestions(self):
-		n = 1000
+		n = 100
 
 		authorIDs = Profile.objects.all().values_list('id', flat = True)
 		tagIDs = Tag.objects.all().values_list('id', flat = True)
@@ -56,7 +56,6 @@ class Command(BaseCommand):
 			number = str(i)
 			title = 'Question title ' + number
 			text = ('Question text ' + number + ' ') * 10
-			likes = random.randint(0, 20)
 			creationDate = datetime.datetime.now()
 			authorID = self.getRandomId(authorIDs)
 
@@ -78,22 +77,6 @@ class Command(BaseCommand):
 			self.stdout.write('Question ' + str(i) + 'saved')
 
 
-	def fillLikes(self):
-		n = 1000
-		for i in range(1, n + 1):
-			questions = Question.objects.all().values_list('id', flat = True)
-			likes = random.randint(1, 20)
-			questionID = questions[i - 1]
-			l = Like(likes = likes, question_id = questionID)
-			with transaction.atomic():
-				try:
-					l.save()
-					self.stdout.write('Like ' + str(i) + 'saved')
-				except:
-					self.stdout.write('Like ' + str(i) + 'failed')
-
-
-
 	def fillAnswers(self):
 		questions = Question.objects.all()
 		numberOfQuestions = questions.count()
@@ -108,13 +91,11 @@ class Command(BaseCommand):
 				j += 1
 				number = str(j)
 				text = ('Answer text ' + number + ' ') * 5
-				likes = random.randint(0, 6)
 
 				authorID = self.getRandomId(authorIDs)
 
 				a = Answer(
 					text = text,
-					like = likes,
 					author_id = authorID,
 					question_id = q.id,
 					)
@@ -126,6 +107,5 @@ class Command(BaseCommand):
 	def handle(self, *args, **options):
 		#self.fillTags()
 		#self.fillProfiles()
-		#self.fillQuestions()
-		self.fillLikes()
-		#self.fillAnswers()
+		self.fillQuestions()
+		self.fillAnswers()

@@ -10,13 +10,17 @@
 					<img src="{{question.author.avatar.url}}
 					" alt="avatar" class ="img-circle img-responsive">
 					<div class="QuestionButtons">
-						<button type="button" class="btn btn-default"> 
-							<span class="glyphicon glyphicon-arrow-down"></span>
-						</button>
-						<button type="button" class="btn btn-default disabled"> {{question.like.likes}} </button>
-						<button type="button" class="btn btn-default"> 
-							<span class="glyphicon glyphicon-arrow-up"> </span>
-						</button>
+							{% if user.is_authenticated %}
+							
+							User.profile:{{ user.profile }}
+							<br>
+							{{ question.questionlike_set.profile }}
+							<button type = "button" class = "btn btn-default js-like-question" data-type = "0", data-id = "{{ question.id }}"> <span class = "glyphicon glyphicon-arrow-down"> </span> </button>
+
+							<button type = "button" class = "btn btn-default disabled likes"> {{ question.likes }} </button>
+							
+							<button type = "button" class = "btn btn-default js-like-question" data-type = "1", data-id = "{{ question.id }}" > <span class = "glyphicon glyphicon-arrow-up"> </span> </button>
+							{% endif %}
 					</div>
 				</div>
 			</div>
@@ -37,10 +41,10 @@
 		<div class="row">
 			<div class="col-md-2">
 				<div class="Question">
-					<img src="{{answer.question.author.avatar.url}}" alt="avatar" class ="img-circle img-responsive">
+					<img src="{{answer.author.avatar.url}}" alt="avatar" class ="img-circle img-responsive">
 					<div class="QuestionButtons">
 						<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-down"></span></button>
-						<button type="button" class="btn btn-default disabled"> {{answer.like}} </button>
+						<button type="button" class="btn btn-default disabled"> {{answer.likes}} </button>
 						<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-up"> </span></button>
 					</div>
 				</div>
