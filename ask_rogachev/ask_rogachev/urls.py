@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'^settings/', views.settings, name = 'settings'),
     url(r'^logout/', views.logout, name = 'logout'),
     url(r'^like_question/$', views.like_question, name = 'like_question'),
-    url(r'^like_answer/$', views.like_answer, name = 'like_answer')
+    url(r'^like_answer/$', views.like_answer, name = 'like_answer'),
+    url(r'^correct/$', views.correct_answer, name = 'correct')
 ]

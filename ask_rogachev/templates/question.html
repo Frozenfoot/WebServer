@@ -3,6 +3,7 @@
 {% block title %}Question{% endblock %}
 
 {% block mainPart %}	
+{% csrf_token %}
 	<div class="col-md-9">
 		<div class="row">
 			<div class="col-md-2">
@@ -11,15 +12,20 @@
 					" alt="avatar" class ="img-circle img-responsive">
 					<div class="QuestionButtons">
 							{% if user.is_authenticated %}
-							
-							User.profile:{{ user.profile }}
-							<br>
-							{{ question.questionlike_set.profile }}
-							<button type = "button" class = "btn btn-default js-like-question" data-type = "0", data-id = "{{ question.id }}"> <span class = "glyphicon glyphicon-arrow-down"> </span> </button>
+								<button type = "button" class = "btn btn-default js-like-question" data-type = "0" data-id = "{{ question.id }}"> 
+									<span class = "glyphicon glyphicon-arrow-down"> </span> 
+								</button>
+							{% else %}
+								<button type = "button" class = "btn btn-default disabled"><span class = "glyphicon glyphicon-arrow-up"> </span></button>
+							{% endif %}
 
-							<button type = "button" class = "btn btn-default disabled likes"> {{ question.likes }} </button>
+							<button type = "button" class = "btn btn-default disabled" id = "question-{{ question.id }}-likes"> {{ question.likes }} </button>
 							
-							<button type = "button" class = "btn btn-default js-like-question" data-type = "1", data-id = "{{ question.id }}" > <span class = "glyphicon glyphicon-arrow-up"> </span> </button>
+							{% if user.is_authenticated %}
+								<button type = "button" class = "btn btn-default js-like-question" data-type = "1" data-id = "{{ question.id }}"> <span class = "glyphicon glyphicon-arrow-up"> </span> 
+								</button>
+							{% else %}
+								<button type = "button" class = "btn btn-default disabled"><span class = "glyphicon glyphicon-arrow-up"> </span></button>
 							{% endif %}
 					</div>
 				</div>
@@ -43,21 +49,53 @@
 				<div class="Question">
 					<img src="{{answer.author.avatar.url}}" alt="avatar" class ="img-circle img-responsive">
 					<div class="QuestionButtons">
-						<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-down"></span></button>
-						<button type="button" class="btn btn-default disabled"> {{answer.likes}} </button>
-						<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-up"> </span></button>
+						{% if user.is_authenticated %}
+							<button type = "button" class = "btn btn-default js-like-answer" data-type = "0"data-id = "{{ answer.id }}"> 
+								<span class = "glyphicon glyphicon-arrow-down"> </span> 
+							</button>
+						{% else %}
+							<button type = "button" class = "btn btn-default disabled likes"><span class = "glyphicon glyphicon-arrow-up"> </span></button>
+						{% endif %}
+					
+						<button type = "button" class = "btn btn-default disabled" id = "answer-{{ answer.id }}-likes"> {{ answer.likes }} 
+						</button>
+						
+						{% if user.is_authenticated %}
+							<button type = "button" class = "btn btn-default js-like-answer" data-type = "1" data-id = "{{ answer.id }}"> 
+								<span class = "glyphicon glyphicon-arrow-up"> </span> 
+							</button>
+						{% else %}
+							<button type = "button" class = "btn btn-default disabled likes"><span class = "glyphicon glyphicon-arrow-up"> </span></button>
+						{% endif %} 
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10">
 				<h4>{{answer.id}}</h4>
 				<p class="text-justify">{{answer.text}}
-				{% if user.is_authenticated %}
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" value=""> Correct!
-					</label>
-				</div>
+				{% if user.id == question.author.user.id %}
+					{% if answer.correct %}
+						<div class="checkbox tags">
+							<label>
+								<input type="checkbox" class = "correct" data-id = "{{ answer.id }}" checked> Correct! </input>
+							</label>
+						</div>
+					{% else %}
+						<div class="checkbox tags">
+							<label>
+								<input type="checkbox" class = "correct" data-id = "{{ answer.id }}" > Correct! </input>
+							</label>
+						</div>
+					{% endif %}
+
+				{% else %}
+					{% if answer.correct %}
+						<div class="checkbox tags">
+							<label>
+								<input type="checkbox" disabled checked> Correct! </input>
+							</label>
+						</div>
+					{% endif %}
 				{% endif %}
 				</p>
 			</div>

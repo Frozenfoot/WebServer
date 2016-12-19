@@ -11,7 +11,7 @@ $('.js-like-question').on('click', function() {
 	}).done(function(resp) {
 		if(resp && resp.status == 'ok') 
 		{
-			window.location.reload();
+			document.getElementById('question-' + $btn.data('id') + '-likes').innerHTML = resp.likes;
 		}
 	})
 	return false;
@@ -30,8 +30,20 @@ $('.js-like-answer').on('click', function() {
 	}).done(function(resp) {
 		if(resp && resp.status == 'ok') 
 		{
-			window.location.reload();
+			document.getElementById('answer-' + $btn.data('id') + '-likes').innerHTML = resp.likes;
 		}
 	})
 	return false;
 });
+
+$('.correct').on('click', function() {
+	var $check = $(this);
+	$.ajax({
+		url: '/correct/',
+		method: 'POST',
+		data: {
+			csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+			id: $check.data('id')	
+		}
+	})
+}) 

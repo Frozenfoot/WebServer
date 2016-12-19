@@ -84,6 +84,8 @@ class Answer(models.Model):
 	author = models.ForeignKey(Profile)
 	creationDate = models.DateTimeField(auto_now_add = True)
 	top = TopAnswersManager()
+	objects = models.Manager()
+	correct = models.BooleanField(default = False)
 
 	def likes(self):
 

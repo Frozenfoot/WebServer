@@ -203,14 +203,11 @@ def like_question(request):
         try:
             like = models.QuestionLike(profile = user.profile, question = question, like = likeOrDislike)
             like.save()
-            #like = models.QuestionLike.objects.get(profile = user.profile, question = question)
-            #like.like = likeOrDislike
-            #like.save()
 
         except:
             return JsonResponse({'status': 'Error: you have already liked this question'})            
 
-        return JsonResponse({'status': 'ok'})
+        return JsonResponse({'status': 'ok', 'likes': question.likes()})
 
 
 def like_answer(request):
@@ -223,20 +220,43 @@ def like_answer(request):
     if request.method == "POST":
         answerId = request.POST.get('id', 0)
         likeOrDislike = request.POST.get('type', 1)
+        print(answerId)
+        print(likeOrDislike)
  
         try:
-            answer = Answer.objects.get(pk = answerId)
+            answer = models.Answer.objects.get(id = answerId)
         except:
-            return JsonResponse({'status': 'error'})
+            print ('Cannot find answer')
+            return JsonResponse({'status': 'errorGettingAnswer'})
  
         try:
-            like = AnswerLike(profile = user.profile, answer = answer, like = likeOrDislike)
+            like = models.AnswerLike(profile = user.profile, answer = answer, like = likeOrDislike)
             like.save()
-            #like = AnswerLike.objects.get(profile = user.profile, answer = answer)
-            #like.like = likeOrDislike
-            #like.save()
 
         except:
             JsonResponse({'status': 'Error:you have already liked this answer'})
  
-    return JsonResponse({'status': 'ok'}) 
+    return JsonResponse({'status': 'ok', 'likes': answer.likes()})
+
+def correct_answer(request):
+    user = request.user
+
+    if request.method == "POST":
+        answerId = request.POST.get('id', 0)
+
+        try:
+            answer = models.Answer.objects.get(id = answerId)
+
+        except:
+            return JsonResponse({'status' : 'Error, cannot find answer'})
+
+        print(user)
+        print(answer.question.author.user)
+
+        if user == answer.question.author.user:
+            answer.correct = not answer.correct
+            answer.save()
+            return JsonResponse({'status' : 'ok'})
+
+        else:
+            return JsonResponse({'status' : 'Error, you are not allowed to choose correct answer'})

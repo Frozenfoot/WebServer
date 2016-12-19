@@ -10,16 +10,30 @@
 				<h2><b>Tag: {{tagName}}</b></h2>
 			</div>
 		</div>
+		{% csrf_token %}
 		{% for question in objects %}
 		<div class="row">
 			<div class="col-md-2">
 				<div class="Question">
 					<img src="{{question.author.avatar.url}}" alt="avatar" class ="img-circle img-responsive">
 					<div class="QuestionButtons">
-						<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-down"></span></button>
-						<button type="button" class="btn btn-default disabled"> {{question.like.likes}} </button>
-						<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-up"> </span></button>
-					</div>
+							{% if user.is_authenticated %}
+								<button type = "button" class = "btn btn-default js-like-question" data-type = "0" data-id = "{{ question.id }}"> 
+									<span class = "glyphicon glyphicon-arrow-down"> </span> 
+								</button>
+							{% else %}
+								<button type = "button" class = "btn btn-default disabled"><span class = "glyphicon glyphicon-arrow-up"> </span></button>
+							{% endif %}
+
+							<button type = "button" class = "btn btn-default disabled" id = "question-{{ question.id }}-likes"> {{ question.likes }} </button>
+							
+							{% if user.is_authenticated %}
+								<button type = "button" class = "btn btn-default js-like-question" data-type = "1" data-id = "{{ question.id }}"> <span class = "glyphicon glyphicon-arrow-up"> </span> 
+								</button>
+							{% else %}
+								<button type = "button" class = "btn btn-default disabled"><span class = "glyphicon glyphicon-arrow-up"> </span></button>
+							{% endif %}
+						</div>
 				</div>
 			</div>
 			<div class="col-md-10">
